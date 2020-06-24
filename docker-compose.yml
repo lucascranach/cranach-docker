@@ -10,6 +10,8 @@ services:
       - "5601:5601"
       - "9200:9200"
       - "5044:5044"
+    networks:
+      - cranach-network
   api:
     build: ${PATH_API}
     command: nodemon server.js
@@ -19,4 +21,10 @@ services:
       - "8080:8080"
     volumes:
       - ${PATH_API}/src:/usr/src/app
-      - /usr/src/app/node_modul
+      - /usr/src/app/node_modules
+    networks:
+      - cranach-network
+
+networks: 
+  cranach-network:
+    driver: bridge

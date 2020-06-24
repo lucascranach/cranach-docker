@@ -27,10 +27,10 @@ do
   echo "elasticsearch_index: $elasticsearch_index"
   echo "file: $file"
   echo "\n"
-  echo "delete index"
+  echo "deleting index"
   curl -XDELETE http://localhost:9200/${elasticsearch_index}/
   echo "\n"
-  echo "index data"
+  echo "indexing data"
   curl -s -H "Content-Type: application/x-ndjson" -XPOST localhost:9200/${elasticsearch_index}/_bulk --data-binary "@${file}"
   echo "\n"
   echo "set max result window for index"
