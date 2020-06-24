@@ -12,15 +12,11 @@ services:
       - "5044:5044"
   api:
     build: ${PATH_API}
+    command: nodemon server.js
     container_name: cranach-api
     image: cranach-api
     ports: 
       - "8080:8080"
-    volumes: 
-      - type: bind
-        source: ${PATH_API}/src
-        target: /usr/src/app
-volumes: 
-  esdata:
-    driver: local
-      
+    volumes:
+      - ${PATH_API}/src:/usr/src/app
+      - /usr/src/app/node_modul
