@@ -2,6 +2,7 @@ version: '3.2'
 services: 
   elk:
     build: ${PATH_ELK}
+    container_name: cranach-elk
     image: cranach-elk
     volumes: 
       - ./esdata:/var/lib/elasticsearch
@@ -11,6 +12,7 @@ services:
       - "5044:5044"
   api:
     build: ${PATH_API}
+    container_name: cranach-api
     image: cranach-api
     ports: 
       - "8080"
