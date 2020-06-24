@@ -15,7 +15,11 @@ services:
     container_name: cranach-api
     image: cranach-api
     ports: 
-      - "8080"
+      - "8080:8080"
+    volumes: 
+      - type: bind
+        source: ${PATH_API}/src
+        target: /usr/src/app
 volumes: 
   esdata:
     driver: local
