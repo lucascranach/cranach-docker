@@ -14,7 +14,7 @@ services:
       - cranach-network
   api:
     build: ${PATH_API}
-    command: nodemon server.js
+    command: nodemon app.js
     container_name: cranach-api
     image: cranach-api
     ports: 

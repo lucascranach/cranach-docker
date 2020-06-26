@@ -13,7 +13,7 @@ $ docker-compose up -d
 
 Stop the containers
 ```shell
-$ docker-compose stop -d
+$ docker-compose stop
 ```
 
 ## Importing data to Elasticsearch
