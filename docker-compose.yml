@@ -16,12 +16,16 @@ services:
     build: ${PATH_API}
     command: nodemon app.js
     container_name: cranach-api
+    environment: 
+      - NODE_PORT=${NODE_PORT}
     image: cranach-api
     ports: 
-      - "8080:8080"
+      - "${NODE_PORT}:${NODE_PORT}"
     volumes:
       - ${PATH_API}/src:/usr/src/app
       - /usr/src/app/node_modules
+    depends_on:
+        - elk
     networks:
       - cranach-network
 
