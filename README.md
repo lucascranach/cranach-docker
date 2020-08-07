@@ -1,5 +1,5 @@
 # cranach-docker
-Docker Setup for Lukas Cranach Archive
+Docker Setup for Lucas Cranach Archive
 
 ## Running the build
 Create a copy of the file `example-env` and rename it to `.env`.
