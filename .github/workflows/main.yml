@@ -15,21 +15,21 @@ jobs:
         host: ${{ secrets.REMOTE_HOST }}
         username: ${{ secrets.SSH_USER }}
         password: ${{ secrets.SSH_PASSWORD }}
-    - name: sudo docker-compose stop via SSH
+    - name: docker-compose stop via SSH
       uses: garygrossgarten/github-action-ssh@release
       with:
         command: |
           cd ${{ secrets.REMOTE_DIR }}cranach-docker
-          sudo docker-compose stop -d
+          docker-compose stop -d
         host: ${{ secrets.REMOTE_HOST }}
         username: ${{ secrets.SSH_USER }}
         password: ${{ secrets.SSH_PASSWORD }}  
-    - name: sudo docker-compose up -d via SSH
+    - name: docker-compose up -d via SSH
       uses: garygrossgarten/github-action-ssh@release
       with:
         command: |
           cd ${{ secrets.REMOTE_DIR }}cranach-docker
-          sudo docker-compose up -d
+          docker-compose up -d
         host: ${{ secrets.REMOTE_HOST }}
         username: ${{ secrets.SSH_USER }}
         password: ${{ secrets.SSH_PASSWORD }}
