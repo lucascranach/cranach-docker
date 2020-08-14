@@ -20,7 +20,7 @@ jobs:
       with:
         command: |
           cd ${{ secrets.REMOTE_DIR }}cranach-docker
-          sudo docker-compose stop -d
+          docker-compose stop -d
         host: ${{ secrets.REMOTE_HOST }}
         username: ${{ secrets.SSH_USER }}
         password: ${{ secrets.SSH_PASSWORD }}  
@@ -29,7 +29,7 @@ jobs:
       with:
         command: |
           cd ${{ secrets.REMOTE_DIR }}cranach-docker
-          sudo docker-compose up -d
+          docker-compose up -d
         host: ${{ secrets.REMOTE_HOST }}
         username: ${{ secrets.SSH_USER }}
         password: ${{ secrets.SSH_PASSWORD }}
