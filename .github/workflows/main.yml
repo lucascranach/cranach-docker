@@ -30,7 +30,7 @@ jobs:
       with:
         command: |
           cd ${{ secrets.REMOTE_DIR }}cranach-docker
-          docker-compose up -d -f docker-compose-production
+          docker-compose up -d -f docker-compose-production.yml
         host: ${{ secrets.REMOTE_HOST }}
         username: ${{ secrets.SSH_USER }}
         password: ${{ secrets.PASSWORD }}
