@@ -15,7 +15,6 @@ jobs:
         host: ${{ secrets.REMOTE_HOST }}
         username: ${{ secrets.SSH_USER }}
         password: ${{ secrets.SSH_PASSWORD }}
-        rm: true
     - name: docker-compose stop api via OPEN SSH Private Key
       uses: garygrossgarten/github-action-ssh@release
       with:
