@@ -1,23 +1,36 @@
 version: '3.2'
 services: 
-  elk:
-    build: ${PATH_ELK}
-    container_name: cranach-elk
-    image: cranach-elk
+  elasticsearch:
+    container_name: cranach-es
+    image: docker.elastic.co/elasticsearch/elasticsearch:$ELASTIC_VERSION
+    environment:
+      - ELASTIC_PASSWORD=$ELASTIC_PASSWORD
+      - xpack.security.enabled=$ELASTIC_SECURITY
+      - discovery.type=single-node
+    ports:
+      - 9200:9200
+      - 9300:9300
+    networks: ['cranach-network']
     volumes: 
       - ${PATH_ES_DATA}:/var/lib/elasticsearch
-    ports:
-      - "5601:5601"
-      - "9200:9200"
-      - "5044:5044"
-    networks:
-      - cranach-network
+  kibana:
+    container_name: cranach-kibana
+    image: docker.elastic.co/kibana/kibana:$ELASTIC_VERSION
+    environment:
+      - ELASTICSEARCH_USERNAME=elastic
+      - ELASTICSEARCH_PASSWORD=$ELASTIC_PASSWORD
+    ports: ['5601:5601']
+    networks: ['cranach-network']
+    links: ['elasticsearch']
+    depends_on: ['elasticsearch']      
   api:
     build: ${PATH_API}
     command: nodemon app.js
     container_name: cranach-api
     environment: 
       - NODE_PORT=${NODE_PORT}
+      - ELASTICSEARCH_USERNAME=elastic
+      - ELASTICSEARCH_PASSWORD=$ELASTIC_PASSWORD
     image: cranach-api
     ports: 
       - "${NODE_PORT}:${NODE_PORT}"
@@ -25,10 +38,9 @@ services:
       - ${PATH_API}/src:/usr/src/app
       - /usr/src/app/node_modules
     depends_on:
-        - elk
+        - elasticsearch
     networks:
       - cranach-network
-
 networks: 
   cranach-network:
     driver: bridge
