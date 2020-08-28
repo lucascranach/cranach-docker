@@ -22,7 +22,6 @@ $ docker-compose up -d
 ```
 
 For debugging run the containers without detached Mode
-Run the containers
 ```shell
 $ docker-compose up
 ```
