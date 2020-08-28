@@ -1,2 +1,2 @@
 importesinidices:
-	sh ${CURDIR}/elasticsearch-import-indices.sh
+	bash ${CURDIR}/elasticsearch-import-indices.sh
