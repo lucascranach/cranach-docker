@@ -19,16 +19,21 @@ docker exec -it ${ELASTICSEARCH_CONTAINER} curl --user ${ELASTICSEARCH_USERNAME}
 echo "\n"
 
 
+
+elasticsearch_index="$(cut -d':' -f1 <<< ${elasticsearch_indices_import_files[0]})";
+
+  echo "deleting index"
+  curl  --user ${ELASTICSEARCH_USERNAME}:${ELASTICSEARCH_PASSWORD} -XDELETE http://${ELASTICSEARCH_HOST}/${elasticsearch_index}/
+
+
 for i in ${elasticsearch_indices_import_files[@]}
 do
-  elasticsearch_index="$(cut -d':' -f1 <<<$i)"
+  # elasticsearch_index="$(cut -d':' -f1 <<<$i)"
   file=$current_dir/"$(cut -d':' -f2 <<<$i)"
   echo "\n"
   echo "elasticsearch_index: $elasticsearch_index"
   echo "file: $file"
   echo "\n"
-  echo "deleting index"
-  curl  --user ${ELASTICSEARCH_USERNAME}:${ELASTICSEARCH_PASSWORD} -XDELETE http://${ELASTICSEARCH_HOST}/${elasticsearch_index}/
   echo "\n"
   echo "indexing data"
   curl  --user ${ELASTICSEARCH_USERNAME}:${ELASTICSEARCH_PASSWORD} -s -H "Content-Type: application/x-ndjson" -XPOST ${ELASTICSEARCH_HOST}/${elasticsearch_index}/_bulk --data-binary "@${file}"
