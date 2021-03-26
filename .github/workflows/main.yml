@@ -16,18 +16,18 @@ jobs:
         username: ${{ secrets.SSH_USER }}
         password: ${{ secrets.SSH_PASSWORD }}
     - name: docker-compose stop via SSH
-      uses: garygrossgarten/github-action-ssh@release
+      uses: appleboy/ssh-action@master
       with:
-        command: |
+        script: |
           cd ${{ secrets.REMOTE_DIR }}cranach-docker
           docker-compose stop -d
         host: ${{ secrets.REMOTE_HOST }}
         username: ${{ secrets.SSH_USER }}
         password: ${{ secrets.SSH_PASSWORD }}  
     - name: docker-compose up -d via SSH
-      uses: garygrossgarten/github-action-ssh@release
+      uses: appleboy/ssh-action@master
       with:
-        command: |
+        script: |
           cd ${{ secrets.REMOTE_DIR }}cranach-docker
           docker-compose up -d
         host: ${{ secrets.REMOTE_HOST }}
