@@ -19,7 +19,7 @@ jobs:
       uses: appleboy/ssh-action@master
       with:
         script: |
-          cd ${{ secrets.REMOTE_DIR }}cranach-docker
+          cd ${{ secrets.REMOTE_DIR }}cranach-docker &&
           docker-compose stop -d
         host: ${{ secrets.REMOTE_HOST }}
         username: ${{ secrets.SSH_USER }}
@@ -28,7 +28,7 @@ jobs:
       uses: appleboy/ssh-action@master
       with:
         script: |
-          cd ${{ secrets.REMOTE_DIR }}cranach-docker
+          cd ${{ secrets.REMOTE_DIR }}cranach-docker &&
           docker-compose up -d
         host: ${{ secrets.REMOTE_HOST }}
         username: ${{ secrets.SSH_USER }}
