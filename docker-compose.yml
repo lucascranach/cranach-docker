@@ -31,6 +31,8 @@ services:
       - NODE_PORT=${NODE_PORT}
       - ELASTICSEARCH_USERNAME=elastic
       - ELASTICSEARCH_PASSWORD=$ELASTIC_PASSWORD
+      - API_USERNAME=$API_USERNAME
+      - API_PASSWORD=$API_PASSWORD
     image: cranach-api
     ports: 
       - "${NODE_PORT}:${NODE_PORT}"
