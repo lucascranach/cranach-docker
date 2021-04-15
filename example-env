@@ -1,5 +1,9 @@
-PATH_API=/Users/volker/GitRepositories/lucascranach/cranach-api
-ELASTIC_SECURITY=true
-ELASTIC_VERSION=7.9.0
+PATH_ELK=/path/to/elk/repo
+PATH_ES_DATA=/path/to/esdata/
+PATH_API=/path/to/api/rep
 NODE_PORT=8080
+ELASTIC_VERSION=7.9.0
+ELASTIC_SECURITY=true
 ELASTIC_PASSWORD=[***]
+API_USERNAME=lucas
+API_PASSWORD=[***]
