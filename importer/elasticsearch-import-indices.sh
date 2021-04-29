@@ -18,24 +18,6 @@ elasticsearch_index="$(cut -d':' -f1 <<< ${elasticsearch_indices_import_files[0]
   echo "creating index and setting mappings"
   curl --user ${ELASTICSEARCH_USERNAME}:${ELASTICSEARCH_PASSWORD} -XPUT http://${ELASTICSEARCH_HOST}/${elasticsearch_index}/ -d '{
   "settings" : { "number_of_shards" : 1, "max_result_window" : 100000, "index.requests.cache.enable": true, "index.queries.cache.enabled": true },
-  "mappings": {
-    "properties": {
-      "thesaurus": { 
-        "type": "nested",
-        "properties" : {
-          "id" : {
-            "type": "text"
-          },
-          "parentId" : {
-            "type": "text"
-          },
-          "term" : {
-            "type": "text"
-          }
-        }
-      }
-    }
-  }
 }' -H "Content-Type: application/json"
 
   echo "\n------------------------------"
