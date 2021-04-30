@@ -35,7 +35,7 @@ services:
       - API_PASSWORD=$API_PASSWORD
     image: cranach-api
     ports: 
-      - "${NODE_PORT}:${NODE_PORT}"
+      - "80:${NODE_PORT}"
     volumes:
       - ${PATH_API}/src:/usr/src/app
       - /usr/src/app/node_modules
