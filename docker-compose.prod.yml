@@ -3,5 +3,8 @@ services:
   api:
     environment: 
       - HTTPS=true
+      - DOMAIN=${DOMAIN}
     ports: 
       - "443:${NODE_PORT}"
+    volumes:
+      - /etc/letsencrypt:/etc/letsencrypt

@@ -33,10 +33,7 @@ services:
       - ELASTICSEARCH_PASSWORD=$ELASTIC_PASSWORD
       - API_USERNAME=$API_USERNAME
       - API_PASSWORD=$API_PASSWORD
-      - HTTPS=false
     image: cranach-api
-    ports: 
-      - "80:${NODE_PORT}"
     volumes:
       - ${PATH_API}/src:/usr/src/app
       - /usr/src/app/node_modules
