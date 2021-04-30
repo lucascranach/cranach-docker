@@ -7,3 +7,4 @@ ELASTIC_SECURITY=true
 ELASTIC_PASSWORD=[***]
 API_USERNAME=lucas
 API_PASSWORD=[***]
+DOMAIN=mivs02.gm.fh-koeln.de
