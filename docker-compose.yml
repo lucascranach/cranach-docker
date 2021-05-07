@@ -22,7 +22,7 @@ services:
     ports: ['5601:5601']
     networks: ['cranach-network']
     links: ['elasticsearch']
-    depends_on: ['elasticsearch']      
+    depends_on: ['elasticsearch']
   api:
     build: ${PATH_API}
     command: nodemon app.js
@@ -34,6 +34,8 @@ services:
       - API_USERNAME=$API_USERNAME
       - API_PASSWORD=$API_PASSWORD
     image: cranach-api
+    ports: 
+      - ${NODE_PORT}:${NODE_PORT}
     volumes:
       - ${PATH_API}/src:/usr/src/app
       - /usr/src/app/node_modules
