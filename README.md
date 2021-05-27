@@ -38,7 +38,7 @@ The importer is located in the directory `importer`.
 * Push the zipped files to be imported on the server  
 `scp files.zip <username>@mivs02.gm.fh-koeln.de:~`
 * Log in to the server. 
-`ssh -l <username> mivs02.gm.fh-koeln.de
+`ssh -l <username> mivs02.gm.fh-koeln.de  
 * Move the zip file to the `files` directory  
 mv files.zip /var/lucascranach/cranach-docker/importer/files/
 * unzip and delete `files.zip`
