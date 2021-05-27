@@ -44,7 +44,7 @@ The importer is located in the directory `importer`.
 * unzip and delete `files.zip`  
 `sudo unzip files.zip && rm files.zip`
 * Start the import script  
-`make importesinidices`
+`cd /var/lucascranach/cranach-docker/importer && make importesinidices`
 
 
 ### If the data on the local machine is to be updated
