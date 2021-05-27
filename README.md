@@ -41,7 +41,7 @@ The importer is located in the directory `importer`.
 `ssh -l <username> mivs02.gm.fh-koeln.de`  
 * Move the zip file to the `files` directory  
 `mv files.zip /var/lucascranach/cranach-docker/importer/files/`  
-* unzip and delete `files.zip`
+* unzip and delete `files.zip`  
 `unzip files.zip && rm files.zip`
 * Start the import script  
 `make importesinidices`
