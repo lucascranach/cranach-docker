@@ -34,6 +34,20 @@ $ docker-compose stop
 ## Importing data to Elasticsearch
 The importer is located in the directory `importer`.
 
+### If the data on the remote server is to be updated
+* Push the zipped files to be imported on the server  
+`scp files.zip <username>@mivs02.gm.fh-koeln.de:~`
+* Log in to the server. 
+ssh -l vschaefer mivs02.gm.fh-koeln.de
+* Move the zip file to the `files` directory  
+mv files.zip /var/lucascranach/cranach-docker/importer/files/
+* unzip and delete `files.zip`
+`unzip files.zip && rm files.zip`
+* Start the import script  
+`make importesinidices`
+
+
+### If the data on the local machine is to be updated
 * Put the files to be imported into the `files` folder.
 * Make a copy of the file `example-config.cfg` and rename it to `config.cfg`.
 * Now adjust the variable `elasticsearch_indices_import_files` in the file `config.cfg`.
