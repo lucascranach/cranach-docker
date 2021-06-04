@@ -32,7 +32,7 @@ done
 
 for i in ${elasticsearch_indices_import_files[@]}
 do
-  # elasticsearch_index="$(cut -d':' -f1 <<<$i)"
+  elasticsearch_index="$(cut -d':' -f1 <<<$i)"
   file=$current_dir/"$(cut -d':' -f2 <<<$i)"
    echo -e "\n"
    echo -e "elasticsearch_index: $elasticsearch_index"
