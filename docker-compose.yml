@@ -12,7 +12,7 @@ services:
       - 9300:9300
     networks: ['cranach-network']
     volumes: 
-      - ${PATH_ES_DATA}:/var/lib/elasticsearch
+      - $PATH_ES_DATA:/usr/share/elasticsearch/data
   kibana:
     container_name: cranach-kibana
     image: docker.elastic.co/kibana/kibana:$ELASTIC_VERSION

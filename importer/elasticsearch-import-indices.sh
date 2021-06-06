@@ -9,8 +9,12 @@ echo "\n"
 echo "set max_buckes to 20000"
 
 
+for i in ${elasticsearch_indices_import_files[@]}
+do
+  # elasticsearch_index="$(cut -d':' -f1 <<<$i)"
 
-elasticsearch_index="$(cut -d':' -f1 <<< ${elasticsearch_indices_import_files[0]})";
+  elasticsearch_index="$(cut -d':' -f1 <<< $i)";
+  file=$current_dir/"$(cut -d':' -f2 <<<$i)"
 
   echo "deleting index"
   curl --user ${ELASTICSEARCH_USERNAME}:${ELASTICSEARCH_PASSWORD} -XDELETE http://${ELASTICSEARCH_HOST}/${elasticsearch_index}/
@@ -20,26 +24,22 @@ elasticsearch_index="$(cut -d':' -f1 <<< ${elasticsearch_indices_import_files[0]
   "settings" : { "number_of_shards" : 1, "max_result_window" : 100000, "index.requests.cache.enable": true, "index.queries.cache.enabled": true },
 }' -H "Content-Type: application/json"
 
-  echo "\n------------------------------"
+  echo ""
+  echo "------------------------------"
 
-
-for i in ${elasticsearch_indices_import_files[@]}
-do
-  # elasticsearch_index="$(cut -d':' -f1 <<<$i)"
-  file=$current_dir/"$(cut -d':' -f2 <<<$i)"
-  echo "\n"
+  echo ""
   echo "elasticsearch_index: $elasticsearch_index"
   echo "file: $file"
-  echo "\n"
-  echo "\n"
+  echo ""
+  echo ""
   echo "indexing data"
   curl  --user ${ELASTICSEARCH_USERNAME}:${ELASTICSEARCH_PASSWORD} -s -H "Content-Type: application/x-ndjson" -XPOST ${ELASTICSEARCH_HOST}/${elasticsearch_index}/_bulk --data-binary "@${file}"
-  echo "\n"
+  echo ""
   echo "set max result window for index"
   curl  --user ${ELASTICSEARCH_USERNAME}:${ELASTICSEARCH_PASSWORD} -XPUT http://${ELASTICSEARCH_HOST}/${elasticsearch_index}/_settings -d '{ "index" : { "max_result_window" : 100000 } }' -H "Content-Type: application/json"
-  echo "\n"
+  echo ""
   echo "--------------------"
 done
 
-echo "\n"
+echo ""
 echo "==> FINISHED ELASTICSEARCH IMPORT"
