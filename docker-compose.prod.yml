@@ -13,7 +13,7 @@ services:
     command: nodemon app.js
     container_name: cranach-api-dev
     environment: 
-      - HTTPS=true
+      - HTTPS=false
       - DOMAIN=${DOMAIN_DEV}
       - NODE_PORT=${NODE_PORT}
       - ELASTICSEARCH_USERNAME=elastic
@@ -22,7 +22,7 @@ services:
       - API_PASSWORD=$API_PASSWORD
     image: cranach-api-dev
     ports: 
-      - "443:${NODE_PORT}"
+      - "444:${NODE_PORT}"
     volumes:
       - ${PATH_API}/src:/usr/src/app
       - /usr/src/app/node_modules
