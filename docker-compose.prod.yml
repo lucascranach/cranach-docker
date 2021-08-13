@@ -8,3 +8,25 @@ services:
       - "443:${NODE_PORT}"
     volumes:
       - /etc/letsencrypt:/etc/letsencrypt
+  api-dev:
+  build: ${PATH_API}
+  command: nodemon app.js
+  container_name: cranach-api-dev
+  environment: 
+    - NODE_PORT=${NODE_PORT}
+    - ELASTICSEARCH_USERNAME=elastic
+    - ELASTICSEARCH_PASSWORD=$ELASTIC_PASSWORD
+    - API_USERNAME=$API_USERNAME
+    - API_PASSWORD=$API_PASSWORD
+  image: cranach-api-dev
+  ports: 
+    - "443:${NODE_PORT}"
+  volumes:
+    - ${PATH_API}/src:/usr/src/app
+    - /usr/src/app/node_modules
+    - /etc/letsencrypt:/etc/letsencrypt
+  depends_on:
+      - elasticsearch
+  networks:
+    - cranach-network
+
