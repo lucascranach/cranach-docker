@@ -5,7 +5,7 @@ services:
       - HTTPS=true
       - DOMAIN=${DOMAIN}
     ports: 
-      - "443:${NODE_PORT}"
+      - "443:${NODE_PORT_DEV}"
     volumes:
       - /etc/letsencrypt:/etc/letsencrypt
   api-dev:
@@ -13,14 +13,14 @@ services:
     command: nodemon app.js
     container_name: cranach-api-dev
     environment: 
-      - NODE_PORT=${NODE_PORT}
+      - NODE_PORT=${NODE_PORT_DEV}
       - ELASTICSEARCH_USERNAME=elastic
       - ELASTICSEARCH_PASSWORD=$ELASTIC_PASSWORD
       - API_USERNAME=$API_USERNAME
       - API_PASSWORD=$API_PASSWORD
     image: cranach-api-dev
     ports: 
-      - "444:${NODE_PORT}"
+      - "444:${NODE_PORT_DEV}"
     volumes:
       - ${PATH_API}/src:/usr/src/app
       - /usr/src/app/node_modules
