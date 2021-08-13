@@ -13,8 +13,6 @@ services:
     command: nodemon app.js
     container_name: cranach-api-dev
     environment: 
-      - HTTPS=false
-      - DOMAIN=${DOMAIN_DEV}
       - NODE_PORT=${NODE_PORT}
       - ELASTICSEARCH_USERNAME=elastic
       - ELASTICSEARCH_PASSWORD=$ELASTIC_PASSWORD
