@@ -20,7 +20,7 @@ services:
       - API_PASSWORD=$API_PASSWORD
     image: cranach-api-dev
     ports: 
-      - "444:${NODE_PORT_DEV}"
+      - "${NODE_PORT_DEV}:${NODE_PORT_DEV}"
     volumes:
       - ${PATH_API}/src:/usr/src/app
       - /usr/src/app/node_modules
