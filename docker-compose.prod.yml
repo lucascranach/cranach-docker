@@ -9,10 +9,12 @@ services:
     volumes:
       - /etc/letsencrypt:/etc/letsencrypt
   api-dev:
-    build: ${PATH_API}
+    build: ${PATH_API_DEV}
     command: nodemon app.js
     container_name: cranach-api-dev
     environment: 
+      - HTTPS=true
+      - DOMAIN=${DOMAIN_DEV}
       - NODE_PORT=${NODE_PORT}
       - ELASTICSEARCH_USERNAME=elastic
       - ELASTICSEARCH_PASSWORD=$ELASTIC_PASSWORD
