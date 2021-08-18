@@ -5,7 +5,7 @@ services:
       - HTTPS=true
       - DOMAIN=${DOMAIN}
     ports: 
-      - "443:${NODE_PORT_DEV}"
+      - "443:${NODE_PORT}"
     volumes:
       - /etc/letsencrypt:/etc/letsencrypt
   api-dev:
