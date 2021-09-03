@@ -32,7 +32,19 @@ do
   elasticsearch_index="$(cut -d':' -f1 <<<$i)"
   echo -e "creating index and setting mappings"
   curl --user ${ELASTICSEARCH_USERNAME}:${ELASTICSEARCH_PASSWORD} -XPUT http://${ELASTICSEARCH_HOST}/${elasticsearch_index}/ -d '{
-  "settings" : { "number_of_shards" : 1, "max_result_window" : 300000, "index.requests.cache.enable": true, "index.queries.cache.enabled": true }
+    "settings" : { "number_of_shards" : 1, "max_result_window" : 300000, "index.requests.cache.enable": true, "index.queries.cache.enabled": true },
+    "mappings": {
+      "properties": {
+        "involvedPersons": {
+          "type": "nested",
+          "properties": {
+            "name": {
+              "type": "keyword"
+            }
+          }
+        }
+      }
+    }
   }' -H "Content-Type: application/json"
 done
 
