@@ -24,7 +24,7 @@ services:
     ports: 
       - "8081:8080"
     volumes:
-      - ${PATH_API}/src:/usr/src/app
+      - ${PATH_API_DEV}/src:/usr/src/app
       - /usr/src/app/node_modules
       - /etc/letsencrypt:/etc/letsencrypt
     depends_on:
