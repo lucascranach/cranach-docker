@@ -15,7 +15,6 @@ services:
     environment: 
       - HTTPS=true
       - DOMAIN=${DOMIN_DEV}
-      - NODE_PORT=${NODE_PORT_DEV}
       - ELASTICSEARCH_USERNAME=elastic
       - ELASTICSEARCH_PASSWORD=$ELASTIC_PASSWORD
       - ELASTICSEARCH_INDICES_PREFIX=$ELASTIC_INDICES_PREFIX_DEV
@@ -23,7 +22,7 @@ services:
       - API_PASSWORD=$API_PASSWORD
     image: cranach-api-dev
     ports: 
-      - "${NODE_PORT_DEV}:${NODE_PORT_DEV}"
+      - "8443:${NODE_PORT}"
     volumes:
       - ${PATH_API}/src:/usr/src/app
       - /usr/src/app/node_modules
