@@ -14,7 +14,7 @@ services:
     container_name: cranach-api-dev
     environment: 
       - HTTPS=true
-      - DOMAIN=${DOMIN_DEV}
+      - DOMAIN=${DOMAIN}
       - ELASTICSEARCH_USERNAME=elastic
       - ELASTICSEARCH_PASSWORD=$ELASTIC_PASSWORD
       - ELASTICSEARCH_INDICES_PREFIX=$ELASTIC_INDICES_PREFIX_DEV

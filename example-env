@@ -11,4 +11,3 @@ ELASTIC_PASSWORD=[***]
 API_USERNAME=lucas
 API_PASSWORD=[***]
 DOMAIN=mivs02.gm.fh-koeln.de
-DOMIN_DEV=mivs02-dev.gm.fh-koeln.d
