@@ -16,7 +16,7 @@ echo -e "\n"
 echo -e "set max_buckes to 20000"
 
 
-for i in $import_config[@]
+for i in $import_config
 do
   elasticsearch_index="$(cut -d':' -f1 <<<$i)"
    echo -e "deleting index"
@@ -27,7 +27,7 @@ echo -e "\n"
 echo -e "------------------------------"
 
 
-for i in $import_config[@]
+for i in $import_config
 do
   elasticsearch_index="$(cut -d':' -f1 <<<$i)"
   echo -e "creating index and setting mappings"
@@ -50,7 +50,7 @@ done
 
 
 
-for i in $import_config[@]
+for i in $import_config
 do
   elasticsearch_index="$(cut -d':' -f1 <<<$i)"
   file=$current_dir/"$(cut -d':' -f2 <<<$i)"
