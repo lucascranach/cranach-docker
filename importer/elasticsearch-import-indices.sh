@@ -42,6 +42,20 @@ do
               "type": "keyword"
             }
           }
+        },
+        "catalogWorkReferences": {
+          "type": "nested",
+          "properties": {
+            "description": {
+              "type": "keyword"
+            },
+            "referenceNumber": {
+              "type": "keyword"
+            },
+            "remarks": {
+              "type": "keyword"
+            }
+          }
         }
       }
     }
