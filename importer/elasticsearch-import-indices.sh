@@ -56,6 +56,25 @@ do
               "type": "keyword"
             }
           }
+        },
+        "images": {
+          "properties": {
+            "overall": {
+              "properties": {
+                "images": {
+                  "properties": {
+                    "metadata": {
+                      "properties": {
+                        "date": {
+                          "type": "keyword"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       }
     }
