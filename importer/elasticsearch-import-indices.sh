@@ -73,6 +73,81 @@ do
                   }
                 }
               }
+            },
+            "uv_light": {
+              "properties": {
+                "images": {
+                  "properties": {
+                    "metadata": {
+                      "properties": {
+                        "date": {
+                          "type": "keyword"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "analysis": {
+              "properties": {
+                "images": {
+                  "properties": {
+                    "metadata": {
+                      "properties": {
+                        "date": {
+                          "type": "keyword"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "conservation": {
+              "properties": {
+                "images": {
+                  "properties": {
+                    "metadata": {
+                      "properties": {
+                        "date": {
+                          "type": "keyword"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "other": {
+              "properties": {
+                "images": {
+                  "properties": {
+                    "metadata": {
+                      "properties": {
+                        "date": {
+                          "type": "keyword"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "photomicrograph": {
+              "properties": {
+                "images": {
+                  "properties": {
+                    "metadata": {
+                      "properties": {
+                        "date": {
+                          "type": "keyword"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
             }
           }
         }
@@ -80,8 +155,6 @@ do
     }
   }' -H "Content-Type: application/json"
 done
-
-
 
 for i in $import_config
 do
