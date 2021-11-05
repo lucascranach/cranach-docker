@@ -35,6 +35,18 @@ do
     "settings" : { "number_of_shards" : 1, "max_result_window" : 300000, "index.requests.cache.enable": true, "index.queries.cache.enabled": true, "index.mapping.total_fields.limit": 1500 },
     "mappings": {
       "properties": {
+        "filterInfos": {
+          "properties": {
+            "attribution": {
+              "type": "nested",
+              "properties": {
+                "id": {
+                  "type": "keyword"
+                }
+              }
+            }
+          }
+        },
         "involvedPersons": {
           "type": "nested",
           "properties": {
