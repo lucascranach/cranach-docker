@@ -44,6 +44,38 @@ do
                   "type": "keyword"
                 }
               }
+            },
+            "catalog": {
+              "type": "nested",
+              "properties": {
+                "id": {
+                  "type": "keyword"
+                }
+              }
+            },
+            "collection_repository": {
+              "type": "nested",
+              "properties": {
+                "id": {
+                  "type": "keyword"
+                }
+              }
+            },
+            "examination_analysis": {
+              "type": "nested",
+              "properties": {
+                "id": {
+                  "type": "keyword"
+                }
+              }
+            },
+            "subject": {
+              "type": "nested",
+              "properties": {
+                "id": {
+                  "type": "keyword"
+                }
+              }
             }
           }
         },
