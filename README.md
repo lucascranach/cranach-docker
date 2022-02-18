@@ -34,19 +34,6 @@ $ docker-compose stop
 ## Importing data to Elasticsearch
 The importer is located in the directory `importer`.
 
-## Renew Let's Encrypt certificates
-1. Renew certificate
-```shell
-sudo certbot certonly --standalone --preferred-challenges http  -d mivs02.gm.fh-koeln.de
-```
-2. stop API container
-```shell
-cd /var/lucascranach/cranach-docker/ && docker-compose stop api
-```
-3. start API container
-```shell
-cd /var/lucascranach/cranach-docker/ && sudo docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d api
-```
 
 ### If the data on the remote server is to be updated
 * Push the zipped files to be imported on the server  
@@ -69,3 +56,18 @@ cd /var/lucascranach/cranach-docker/ && sudo docker-compose -f docker-compose.ym
 * Make a copy of the file `example-config.cfg` and rename it to `config.cfg`.
 * Now adjust the variable `elasticsearch_indices_import_files` in the file `config.cfg`.
 * Start the import script: `make importesinidices`
+
+## Renew Let's Encrypt certificates
+1. Renew certificate
+```shell
+sudo certbot certonly --standalone --preferred-challenges http  -d mivs02.gm.fh-koeln.de
+```
+2. stop API container
+```shell
+cd /var/lucascranach/cranach-docker/ && docker-compose stop api
+```
+3. start API container
+```shell
+cd /var/lucascranach/cranach-docker/ && sudo docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d api
+```
+
