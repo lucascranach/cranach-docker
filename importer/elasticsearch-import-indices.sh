@@ -192,6 +192,36 @@ do
                   }
                 }
               }
+            },
+            "reverse": {
+              "properties": {
+                "images": {
+                  "properties": {
+                    "metadata": {
+                      "properties": {
+                        "date": {
+                          "type": "keyword"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },            
+           "transmitted_light": {
+              "properties": {
+                "images": {
+                  "properties": {
+                    "metadata": {
+                      "properties": {
+                        "date": {
+                          "type": "keyword"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
             }
           }
         }

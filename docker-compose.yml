@@ -10,7 +10,8 @@ services:
     ports:
       - 9200:9200
       - 9300:9300
-    networks: ['cranach-network']
+    networks:
+      - cranach-network
     volumes: 
       - ${PATH_ES_DATA}:/var/lib/elasticsearch
   kibana:
@@ -20,7 +21,8 @@ services:
       - ELASTICSEARCH_USERNAME=elastic
       - ELASTICSEARCH_PASSWORD=$ELASTIC_PASSWORD
     ports: ['5601:5601']
-    networks: ['cranach-network']
+    networks:
+      - cranach-network
     links: ['elasticsearch']
     depends_on: ['elasticsearch']
   api:
