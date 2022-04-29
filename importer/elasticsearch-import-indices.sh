@@ -163,6 +163,21 @@ do
                 }
               }
             },
+            "irr": {
+              "properties": {
+                "images": {
+                  "properties": {
+                    "metadata": {
+                      "properties": {
+                        "date": {
+                          "type": "keyword"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
             "other": {
               "properties": {
                 "images": {
