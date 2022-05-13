@@ -163,6 +163,21 @@ do
                 }
               }
             },
+            "irr": {
+              "properties": {
+                "images": {
+                  "properties": {
+                    "metadata": {
+                      "properties": {
+                        "date": {
+                          "type": "keyword"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
             "other": {
               "properties": {
                 "images": {
@@ -179,6 +194,36 @@ do
               }
             },
             "photomicrograph": {
+              "properties": {
+                "images": {
+                  "properties": {
+                    "metadata": {
+                      "properties": {
+                        "date": {
+                          "type": "keyword"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "reverse": {
+              "properties": {
+                "images": {
+                  "properties": {
+                    "metadata": {
+                      "properties": {
+                        "date": {
+                          "type": "keyword"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },            
+           "transmitted_light": {
               "properties": {
                 "images": {
                   "properties": {
