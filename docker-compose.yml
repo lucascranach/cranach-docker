@@ -7,12 +7,15 @@ services:
       - MONGO_INITDB_ROOT_USERNAME=${MONGO_DB_USERNAME}
       - MONGO_INITDB_DATABASE=admin
       - MONGO_INITDB_ROOT_PASSWORD=${MONGO_DB_PASSWORD}
+      - MONGO_DB_USERNAME=${MONGO_DB_USERNAME}
+      - MONGO_DB_PASSWORD=${MONGO_DB_PASSWORD}
+      - MONGO_DB_DATABASE=${MONGO_DB_DATABASE}
     ports:
       - '27017:27017'
     networks: ['cranach-network']
     volumes:
       - ${PATH_MONGO_DATA}/:/data/db
-      - ./docker-entrypoint-initdb.d/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+      - ./docker-entrypoint-initdb.d/mongo-init.sh:/docker-entrypoint-initdb.d/mongo-init.sh:ro
   mongo-express:
     container_name: mongo-express
     image: mongo-express
@@ -63,6 +66,7 @@ services:
       - API_USERNAME=$API_USERNAME
       - API_PASSWORD=$API_PASSWORD
       - MONGO_DB_CONNECTION_STRING=${MONGO_DB_CONNECTION_STRING}
+      - MONGO_DB_PASSWORD=${MONGO_DB_PASSWORD}
       - SESSION_EXPIRY=${SESSION_EXPIRY}
       - JWT_SECRET=${JWT_SECRET}
     image: cranach-api
