@@ -25,7 +25,7 @@ JWT_SECRET = [***]
 SESSION_EXPIRY = 1h # 1 Hour
 
 MONGO_DB_CONNECTION_STRING = mongodb://cranach-mongo-db:27017/passportjwt
-MONGO_DB_DATABASE = passport-jwt
+MONGO_DB_DATABASE = passportjwt
 MONGO_DB_USERNAME = admin
 MONGO_DB_PASSWORD = [***]
 
