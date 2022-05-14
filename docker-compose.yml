@@ -1,5 +1,36 @@
 version: '3.2'
-services: 
+services:
+  mongodb:
+    container_name: cranach-mongo-db
+    image: mongo
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_DB_USERNAME}
+      - MONGO_INITDB_DATABASE=admin
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_DB_PASSWORD}
+      - MONGO_DB_USERNAME=${MONGO_DB_USERNAME}
+      - MONGO_DB_PASSWORD=${MONGO_DB_PASSWORD}
+      - MONGO_DB_DATABASE=${MONGO_DB_DATABASE}
+    ports:
+      - '27017:27017'
+    networks: ['cranach-network']
+    volumes:
+      - ${PATH_MONGO_DATA}/:/data/db
+      - ./docker-entrypoint-initdb.d/mongo-init.sh:/docker-entrypoint-initdb.d/mongo-init.sh:ro
+  mongo-express:
+    container_name: mongo-express
+    image: mongo-express
+    depends_on:
+      - mongodb
+    environment:
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=${MONGO_DB_USERNAME}
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=${MONGO_DB_PASSWORD}
+      - ME_CONFIG_MONGODB_SERVER=cranach-mongo-db
+      - ME_CONFIG_BASICAUTH_USERNAME=${ME_CONFIG_BASICAUTH_USERNAME}
+      - ME_CONFIG_BASICAUTH_PASSWORD=${ME_CONFIG_BASICAUTH_PASSWORD}
+    restart: unless-stopped
+    ports:
+      - '8081:8081'
+    networks: ['cranach-network']
   elasticsearch:
     container_name: cranach-es
     image: docker.elastic.co/elasticsearch/elasticsearch:$ELASTIC_VERSION
@@ -36,6 +67,10 @@ services:
       - ELASTICSEARCH_INDICES_PREFIX=$ELASTIC_INDICES_PREFIX
       - API_USERNAME=$API_USERNAME
       - API_PASSWORD=$API_PASSWORD
+      - MONGO_DB_CONNECTION_STRING=${MONGO_DB_CONNECTION_STRING}
+      - MONGO_DB_PASSWORD=${MONGO_DB_PASSWORD}
+      - SESSION_EXPIRY=${SESSION_EXPIRY}
+      - JWT_SECRET=${JWT_SECRET}
     image: cranach-api
     ports: 
       - ${NODE_PORT}:${NODE_PORT}
@@ -43,7 +78,7 @@ services:
       - ${PATH_API}/src:/usr/src/app
       - /usr/src/app/node_modules
     depends_on:
-        - elasticsearch
+       - elasticsearch
     networks:
       - cranach-network
 networks: 

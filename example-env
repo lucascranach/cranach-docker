@@ -1,13 +1,33 @@
 PATH_ELK=/path/to/elk/repo
 PATH_ES_DATA=/path/to/esdata/
+
 PATH_API=/path/to/api/rep
 PATH_API_DEV=/path/to/api/rep
+
+PATH_MONGO_DATA=/path/to/mongodata/
+
+
 NODE_PORT=8080
-ELASTIC_VERSION=7.17.3
+NODE_PORT_DEV=8081
+
+ELASTIC_VERSION=7.16.3
 ELASTIC_SECURITY=true
 ELASTIC_INDICES_PREFIX=[***]
 ELASTIC_INDICES_PREFIX_DEV=[***]
 ELASTIC_PASSWORD=[***]
+
 API_USERNAME=lucas
 API_PASSWORD=[***]
+
 DOMAIN=mivs02.gm.fh-koeln.de
+
+JWT_SECRET = [***]
+SESSION_EXPIRY = 1h # 1 Hour
+
+MONGO_DB_CONNECTION_STRING = mongodb://cranach-mongo-db:27017/passportjwt
+MONGO_DB_DATABASE = passportjwt
+MONGO_DB_USERNAME = admin
+MONGO_DB_PASSWORD = [***]
+
+ME_CONFIG_BASICAUTH_USERNAME = admin
+ME_CONFIG_BASICAUTH_PASSWORD = [***]
