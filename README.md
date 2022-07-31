@@ -60,7 +60,7 @@ The importer is located in the directory `importer`.
 ## Renew Let's Encrypt certificates
 1. Renew certificate
 ```shell
-sudo certbot certonly --nginx --standalone --preferred-challenges http  -d mivs02.gm.fh-koeln.de
+sudo certbot certonly --standalone --preferred-challenges http  -d mivs02.gm.fh-koeln.de
 ```
 2. stop API container
 ```shell

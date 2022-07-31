@@ -2,22 +2,25 @@ version: '3.2'
 services:
   reverse-proxy:
     volumes:
-      - ./nginx-config/default.prod.conf:/etc/nginx/conf.d/default.conf:ro
-      - /etc/letsencrypt:/etc/letsencrypt
+      - ./nginx-config/prod/templates/:/etc/nginx/templates/
+      - ./nginx-config/:/nginx-config/
+      - /etc/letsencrypt/:/etc/letsencrypt/
     depends_on:
      - api
      - api-dev
   api:
-    environment: 
-      - HTTPS=false
+    environment:
+      - NGINX_ENVSUBST_TEMPLATE_SUFFIX=.template
       - DOMAIN=${DOMAIN}
+      - NODE_PORT=${NODE_PORT}
   api-dev:
     build: ${PATH_API_DEV}
     command: nodemon app.js
     container_name: cranach-api-dev
+    restart: unless-stopped
     environment: 
-      - HTTPS=false
       - DOMAIN=${DOMAIN}
+      - NODE_PORT=${NODE_PORT}
       - ELASTICSEARCH_USERNAME=elastic
       - ELASTICSEARCH_PASSWORD=$ELASTIC_PASSWORD
       - ELASTICSEARCH_INDICES_PREFIX=$ELASTIC_INDICES_PREFIX_DEV

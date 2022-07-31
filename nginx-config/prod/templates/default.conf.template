@@ -1,9 +1,13 @@
 server {
-    listen       80;
-    listen  [::]:80;
-    server_name  ${DOMAIN};
+   listen 80;
+   listen [::]:80;
+   return 301 https://$host$request_uri;
+}
 
+server {
     listen       443 ssl;
+    listen  [::]:443 ssl;
+    server_name  ${DOMAIN};
 
     #access_log  /var/log/nginx/host.access.log  main;
 
@@ -11,7 +15,10 @@ server {
     ssl_certificate /etc/letsencrypt/live/${DOMAIN}/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/${DOMAIN}/privkey.pem;
 
-    include /etc/letsencrypt/options-ssl-nginx.conf;
+    include /nginx-config/options-ssl-nginx.conf;
+
+    # verify chain of trust of OCSP response using Root CA and Intermediate certs
+    ssl_trusted_certificate /etc/letsencrypt/live/${DOMAIN}/chain.pem;
 
     location / {
         proxy_pass http://cranach-api:8080/;
