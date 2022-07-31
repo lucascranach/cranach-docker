@@ -1,5 +1,5 @@
 **/.DS_Store
 .env
 esdata
-importer/files/*
+importer/files*
 importer/config.cfg
