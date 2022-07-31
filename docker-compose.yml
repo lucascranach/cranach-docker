@@ -1,5 +1,20 @@
 version: '3.2'
 services:
+  reverse-proxy:
+    container_name: reverse-proxy
+    image: nginx
+    environment:
+      - NGINX_ENVSUBST_TEMPLATE_SUFFIX=.template
+      - DOMAIN=${DOMAIN}
+    ports:
+      - 80:80
+      - 443:443
+    networks: ['cranach-network']
+    volumes:
+      - ./nginx-config/dev/templates/:/etc/nginx/templates/
+      - ./nginx-config/:/nginx-config/
+    depends_on:
+     - api
   mongodb:
     container_name: cranach-mongo-db
     image: mongo
@@ -72,8 +87,6 @@ services:
       - SESSION_EXPIRY=${SESSION_EXPIRY}
       - JWT_SECRET=${JWT_SECRET}
     image: cranach-api
-    ports: 
-      - ${NODE_PORT}:${NODE_PORT}
     volumes:
       - ${PATH_API}/src:/usr/src/app
       - /usr/src/app/node_modules

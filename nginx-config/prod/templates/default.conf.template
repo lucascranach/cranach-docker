@@ -1,0 +1,40 @@
+server {
+   listen 80;
+   listen [::]:80;
+   return 301 https://$host$request_uri;
+}
+
+server {
+    listen       443 ssl;
+    listen  [::]:443 ssl;
+    server_name  ${DOMAIN};
+
+    #access_log  /var/log/nginx/host.access.log  main;
+
+    # RSA certificate
+    ssl_certificate /etc/letsencrypt/live/${DOMAIN}/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/${DOMAIN}/privkey.pem;
+
+    include /nginx-config/options-ssl-nginx.conf;
+
+    # verify chain of trust of OCSP response using Root CA and Intermediate certs
+    ssl_trusted_certificate /etc/letsencrypt/live/${DOMAIN}/chain.pem;
+
+    location / {
+        proxy_pass http://cranach-api:8080/;
+    }
+
+    #error_page  404              /404.html;
+
+    # redirect server error pages to the static page /50x.html
+    #
+    error_page   500 502 503 504  /50x.html;
+    location = /50x.html {
+        root   /usr/share/nginx/html;
+    }
+
+    
+    location /dev/ {
+        proxy_pass http://cranach-api-dev:8080/;
+    }
+}
