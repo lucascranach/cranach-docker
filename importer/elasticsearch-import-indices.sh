@@ -101,6 +101,26 @@ do
             }
           }
         },
+        "additionalTextInformation": {
+          "type": "nested",
+          "properties": {
+            "type": {
+              "type": "keyword"
+            },
+            "text": {
+              "type": "keyword"
+            },
+            "date": {
+              "type": "keyword"
+            },
+            "year": {
+              "type": "keyword"
+            },
+            "author": {
+              "type": "keyword"
+            }
+          }
+        },
         "images": {
           "properties": {
             "overall": {
