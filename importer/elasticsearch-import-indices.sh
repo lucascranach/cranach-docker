@@ -121,6 +121,104 @@ do
             }
           }
         },
+        "restorationSurveys": {
+          "type": "nested",
+          "properties": {
+            "type": {
+              "type": "keyword"
+            },
+            "project": {
+              "type": "keyword"
+            },
+            "overallAnalysis": {
+              "type": "keyword"
+            },
+            "remarks": {
+              "type": "keyword"
+            },
+            "tests": {
+              "type": "nested",
+              "properties": {
+                "order": {
+                  "type": "keyword"
+                },
+                "kind": {
+                  "type": "keyword"
+                },
+                "text": {
+                  "type": "keyword"
+                },
+                "purpose": {
+                  "type": "keyword"
+                },
+                "keywords": {
+                  "type": "nested",
+                  "properties": {
+                    "id": {
+                      "type": "keyword"
+                    },
+                    "name": {
+                      "type": "keyword"
+                    },
+                    "additional": {
+                      "type": "keyword"
+                    }
+                  }
+                }
+              }
+            },
+            "involvedPersons": {
+              "type": "nested",
+              "properties": {
+                "role": {
+                  "type": "keyword"
+                },
+                "name": {
+                  "type": "keyword"
+                }
+              }
+            },
+            "processingDates": {
+              "type": "nested",
+              "properties": {
+                "beginDate": {
+                  "type": "keyword"
+                },
+                "beginYear": {
+                  "type": "keyword"
+                },
+                "endDate": {
+                  "type": "keyword"
+                },
+                "endYear": {
+                  "type": "keyword"
+                }
+              }
+            },
+            "signature": {
+              "type": "nested",
+              "properties": {
+                "date": {
+                  "type": "keyword"
+                },
+                "name": {
+                  "type": "keyword"
+                }
+              }
+            },
+            "fileReferences": {
+              "type": "nested",
+              "properties": {
+                "type": {
+                  "type": "keyword"
+                },
+                "id": {
+                  "type": "keyword"
+                }
+              }
+            }
+          }
+        },
         "images": {
           "properties": {
             "overall": {
