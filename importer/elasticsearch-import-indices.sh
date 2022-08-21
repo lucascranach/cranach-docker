@@ -87,6 +87,34 @@ do
             }
           }
         },
+        "locations": {
+          "type": "nested",
+          "properties": {
+            "type": {
+              "type": "keyword"
+            },
+            "term": {
+              "type": "keyword"
+            },
+            "path": {
+              "type": "keyword"
+            },
+            "url": {
+              "type": "keyword"
+            },
+            "geoPosition": {
+              "type": "nested",
+              "properties": {
+                "lat": {
+                  "type": "keyword"
+                },
+                "lng": {
+                  "type": "keyword"
+                }
+              }
+            }
+          }
+        },
         "catalogWorkReferences": {
           "type": "nested",
           "properties": {
