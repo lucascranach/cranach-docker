@@ -7,7 +7,6 @@ services:
       - /etc/letsencrypt/:/etc/letsencrypt/
     depends_on:
      - api
-     - api-dev
   api:
     environment:
       - NGINX_ENVSUBST_TEMPLATE_SUFFIX=.template
