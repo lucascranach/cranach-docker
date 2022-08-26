@@ -21,15 +21,6 @@ jobs:
         host: ${{ secrets.REMOTE_DEV_HOST }}
         username: ${{ secrets.SSH_USER }}
         password: ${{ secrets.SSH_PASSWORD }}
-    - name: checkout integration branch via SSH
-      uses: appleboy/ssh-action@master
-      with:
-        script: |
-          cd ${{ secrets.REMOTE_DIR }}cranach-docker &&
-          git checkout integration
-        host: ${{ secrets.REMOTE_DEV_HOST }}
-        username: ${{ secrets.SSH_USER }}
-        password: ${{ secrets.SSH_PASSWORD }}  
     - name: docker-compose stop via SSH
       uses: appleboy/ssh-action@master
       with:
