@@ -57,8 +57,6 @@ The importer is located in the directory `importer`.
 * unzip and delete `files.zip`  
 `sudo cd /var/lucascranach/cranach-docker/importer && unzip files.zip && rm files.zip`
 * Start the import script
-  * for **dev** enviroment  
-  `cd /var/lucascranach/cranach-docker/importer && make importesdevinidices`
   * for **prod** enviroment  
   `cd /var/lucascranach/cranach-docker/importer && make importesinidices`
 
