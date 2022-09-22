@@ -58,7 +58,7 @@ The importer is located in the directory `importer`.
 `sudo cd /var/lucascranach/cranach-docker/importer && unzip files.zip && rm files.zip`
 * Start the import script
   * for **prod** enviroment  
-  `cd /var/lucascranach/cranach-docker/importer && make importesinidices`
+  `cd /var/lucascranach/cranach-docker/importer && make importesindices`
 
 
 ### If the data on the local machine is to be updated
