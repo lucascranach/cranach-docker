@@ -90,6 +90,7 @@ services:
     volumes:
       - ${PATH_API}/src:/usr/src/app
       - /usr/src/app/node_modules
+      - ${PATH_API_FILTER_ASSETS}:/usr/src/app/server/assets/filters
     depends_on:
        - elasticsearch
     networks:
