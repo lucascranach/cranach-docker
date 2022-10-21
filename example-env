@@ -4,6 +4,8 @@ PATH_ES_DATA=/path/to/esdata/
 PATH_API=/path/to/api/rep
 PATH_API_DEV=/path/to/api/rep
 
+PATH_API_FILTER_ASSETS=/path/to/filter/assets
+
 PATH_MONGO_DATA=/path/to/mongodata/
 
 
