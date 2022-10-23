@@ -21,7 +21,7 @@ Run the containers
 $ docker-compose up -d
 ```
 
-For debugging run the containers without detached Mode
+For debugging run the containers without detached mode
 ```shell
 $ docker-compose up
 ```
@@ -30,6 +30,18 @@ Stop the containers
 ```shell
 $ docker-compose stop
 ```
+
+## Remote server
+There are two remote servers for the Cranach API which can be accessed via the following URLs:
+* `https://mivs.02.gm.fh-koeln.de` - Productive environment
+* `https://mivs.03.gm.fh-koeln.de` - Development enviroment
+
+The Deployment to the servers is handled via GitHub Actions and is triggered when changes are pushed to one of the following repositories: `cranach-docker`, `cranach-api`, `cranach-elk`
+On which server will be deployed depends on the branch to which changes are pushed or a pull request is merged. The following dependencies exist:
+
+* `mivs.02.gm.fh-koeln.de` - `master` branches
+* `mivs.03.gm.fh-koeln.de` - `integration` branches
+
 
 ## Importing data to Elasticsearch
 The importer is located in the directory `importer`.
@@ -45,10 +57,8 @@ The importer is located in the directory `importer`.
 * unzip and delete `files.zip`  
 `sudo cd /var/lucascranach/cranach-docker/importer && unzip files.zip && rm files.zip`
 * Start the import script
-  * for **dev** enviroment  
-  `cd /var/lucascranach/cranach-docker/importer && make importesdevinidices`
   * for **prod** enviroment  
-  `cd /var/lucascranach/cranach-docker/importer && make importesinidices`
+  `cd /var/lucascranach/cranach-docker/importer && make importesindices`
 
 
 ### If the data on the local machine is to be updated
