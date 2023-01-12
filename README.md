@@ -57,8 +57,7 @@ The importer is located in the directory `importer`.
 * unzip and delete `files.zip`  
 `sudo cd /var/lucascranach/cranach-docker/importer && unzip files.zip && rm files.zip`
 * Start the import script
-  * for **prod** enviroment  
-  `cd /var/lucascranach/cranach-docker/importer && make importesindices`
+`cd /var/lucascranach/cranach-docker/importer && make importesindices`
 
 
 ### If the data on the local machine is to be updated
@@ -68,15 +67,17 @@ The importer is located in the directory `importer`.
 * Start the import script: `make importesinidices`
 
 ## Renew Let's Encrypt certificates
-1. Renew certificate
-```shell
-sudo certbot certonly --standalone --preferred-challenges http  -d mivs02.gm.fh-koeln.de
-```
-2. stop API container
+1. Stop containers
 ```shell
 cd /var/lucascranach/cranach-docker/ && docker-compose stop api
 ```
-3. start API container
+
+2. Renew certificate
+```shell
+sudo certbot certonly --standalone --preferred-challenges http  -d mivs02.gm.fh-koeln.de
+```
+
+3. Start stop containers
 ```shell
 cd /var/lucascranach/cranach-docker/ && sudo docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d api
 ```
