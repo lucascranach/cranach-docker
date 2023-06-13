@@ -1,11 +1,7 @@
 #!/bin/bash
 . config.cfg
 current_dir="${0%/*}"
-if [ "$1" = "dev" ]; then
-  import_config=${elasticsearch_dev_indices_import_files[@]}
-else
   import_config=${elasticsearch_indices_import_files[@]}
-fi
 
 echo $import_config;
 echo -e "*****************************"
