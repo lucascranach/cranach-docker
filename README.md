@@ -68,16 +68,16 @@ The importer is located in the directory `importer`.
 * Start the import script: `make importesinidices`
 
 ## Renew Let's Encrypt certificates
-1. Renew certificate
+1. stop API container
+```shell
+cd /var/lucascranach/cranach-docker/ && docker-compose stop reverse-proxy
+```
+2. Renew certificate
 ```shell
 sudo certbot certonly --standalone --preferred-challenges http  -d mivs02.gm.fh-koeln.de
 ```
-2. stop API container
-```shell
-cd /var/lucascranach/cranach-docker/ && docker-compose stop api
-```
 3. start API container
 ```shell
-cd /var/lucascranach/cranach-docker/ && sudo docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d api
+cd /var/lucascranach/cranach-docker/ && sudo docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d reverse-proxy
 ```
 
