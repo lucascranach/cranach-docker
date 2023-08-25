@@ -24,6 +24,14 @@ server {
         proxy_pass http://cranach-api:8080/;
     }
 
+    location /cranach-ar/ {
+        proxy_pass http://172.17.0.1:8080;
+    }
+
+    location /cranach-ar-backend/ {
+        proxy_pass http://172.17.0.1:8080;
+    }
+
     #error_page  404              /404.html;
 
     # redirect server error pages to the static page /50x.html

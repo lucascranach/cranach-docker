@@ -381,6 +381,17 @@ do
               }
             }
           }
+        },
+        "publications": {
+          "type": "nested",
+          "properties": {
+            "type": {
+              "type": "keyword"
+            },
+            "text": {
+              "type": "keyword"
+            }
+          }
         }
       }
     }
