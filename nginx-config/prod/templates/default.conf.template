@@ -24,6 +24,14 @@ server {
         proxy_pass http://cranach-api:8080/;
     }
 
+    location /kibana {
+        proxy_pass http://cranach-kibana:5601;
+    }
+
+    location /elastic {
+        proxy_pass http://cranach-es:9200/;
+    }
+
     location /cranach-ar/ {
         proxy_pass http://172.17.0.1:8080;
     }
