@@ -8,8 +8,15 @@ server {
     location / {
         proxy_pass http://cranach-api:8080/;
     }
+    
+    location /elasticsearch {
+        proxy_pass http://cranach-es:9200/;
+        rewrite ^/elasticsearch/(.*) /$1 break; # Entfernt /elasticsearch aus dem Pfad
+    }
 
-    #error_page  404              /404.html;
+    location /kibana {
+        proxy_pass http://cranach-kibana:5601;
+    }
 
     # redirect server error pages to the static page /50x.html
     #

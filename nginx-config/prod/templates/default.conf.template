@@ -28,9 +28,10 @@ server {
         proxy_pass http://cranach-kibana:5601;
     }
 
-    location /elastic {
+    location /elasticsearch {
         proxy_pass http://cranach-es:9200/;
-    }
+        rewrite ^/elasticsearch/(.*) /$1 break; # removes /elasticsearch from the path
+    } 
 
     location /cranach-ar/ {
         proxy_pass http://172.17.0.1:8080;
