@@ -80,3 +80,4 @@ sudo certbot certonly --standalone --preferred-challenges http  -d mivs02.gm.fh-
 cd /var/lucascranach/cranach-docker/ && sudo docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d reverse-proxy
 ```
 
+
