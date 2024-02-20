@@ -11,7 +11,7 @@ server {
     
     location /elasticsearch {
         proxy_pass http://cranach-es:9200/;
-        rewrite ^/elasticsearch/(.*) /$1 break; # Entfernt /elasticsearch aus dem Pfad
+        rewrite ^/elasticsearch/(.*) /$1 break; #  removes /elasticsearch from the path
     }
 
     location /kibana {
