@@ -75,7 +75,7 @@ cd /var/lucascranach/cranach-docker/ && docker-compose stop reverse-proxy
 ```shell
 sudo certbot certonly --standalone --preferred-challenges http  -d mivs02.gm.fh-koeln.de
 ```
-3. start API reverse proy
+3. start reverse proxy
 ```shell
 cd /var/lucascranach/cranach-docker/ && sudo docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d reverse-proxy
 ```
