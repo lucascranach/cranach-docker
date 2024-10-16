@@ -1,6 +1,7 @@
 # Default Kibana configuration for docker target
 server.host: "0.0.0.0"
 server.basePath: "/kibana"
+server.publicBaseUrl: "https://mivs03.gm.fh-koeln.de/kibana"
 server.rewriteBasePath: true
 server.shutdownTimeout: "5s"
 elasticsearch.hosts: ["http://cranach-es:9200"]
