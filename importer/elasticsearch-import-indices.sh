@@ -15,7 +15,7 @@ echo -e "set max_buckes to 20000"
 for i in $import_config
 do
   elasticsearch_index="$(cut -d':' -f1 <<<$i)"
-   echo -e "deleting index"
+  echo -e "deleting index"
   curl --user ${ELASTICSEARCH_USERNAME}:${ELASTICSEARCH_PASSWORD} -XDELETE http://${ELASTICSEARCH_HOST}/${elasticsearch_index}/
 done
 
@@ -379,6 +379,17 @@ do
                   }
                 }
               }
+            }
+          }
+        },
+        "publications": {
+          "type": "nested",
+          "properties": {
+            "type": {
+              "type": "keyword"
+            },
+            "text": {
+              "type": "keyword"
             }
           }
         }

@@ -9,6 +9,8 @@ server {
     listen  [::]:443 ssl;
     server_name  ${DOMAIN};
 
+    client_max_body_size 100M;
+
     #access_log  /var/log/nginx/host.access.log  main;
 
     # RSA certificate
@@ -22,6 +24,23 @@ server {
 
     location / {
         proxy_pass http://cranach-api:8080/;
+    }
+
+    location /kibana {
+        proxy_pass http://cranach-kibana:5601;
+    }
+
+    location /elasticsearch/ {
+        proxy_pass http://cranach-es:9200/;
+        rewrite ^/elasticsearch/(.*) /$1 break; # removes /elasticsearch from the path
+    }
+
+    location /cranach-ar/ {
+        proxy_pass http://172.17.0.1:8080;
+    }
+
+    location /cranach-ar-backend/ {
+        proxy_pass http://172.17.0.1:8080;
     }
 
     #error_page  404              /404.html;

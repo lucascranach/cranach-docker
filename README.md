@@ -89,7 +89,7 @@ The importer is located in the directory `importer`.
 * Start the import script: `make importesinidices`
 
 ## Renew Let's Encrypt certificates
-1. stop API container
+1. stop reverse proxy container
 ```shell
 cd /var/lucascranach/cranach-docker/ && docker-compose stop reverse-proxy
 ```
@@ -97,7 +97,7 @@ cd /var/lucascranach/cranach-docker/ && docker-compose stop reverse-proxy
 ```shell
 sudo certbot certonly --standalone --preferred-challenges http  -d mivs02.gm.fh-koeln.de
 ```
-3. start API container
+3. start reverse proxy
 ```shell
 cd /var/lucascranach/cranach-docker/ && sudo docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d reverse-proxy
 ```
