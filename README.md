@@ -13,22 +13,22 @@ The application runs with Docker Compose and contains two Container.
 
 Build the images and run the containers
 ```shell
-$ docker-compose build
+docker-compose build
 ```
 
 Run the containers
 ```shell
-$ docker-compose up -d
+docker-compose up -d
 ```
 
 For debugging run the containers without detached mode
 ```shell
-$ docker-compose up
+docker-compose up
 ```
 
 Stop the containers
 ```shell
-$ docker-compose stop
+docker-compose stop
 ```
 
 ### Start and Stop the containers on a remote server
@@ -36,21 +36,21 @@ To start and stop the containers on a remote server, you can use the following c
 
 Login to the remote server
 ```shell
-$ ssh -l <username> mivs02.gm.fh-koeln.de
+ssh -l <username> mivs02.gm.fh-koeln.de
 ```
 Navigate to the directory where the `docker-compose.yml` file is located
 ```shell
-$ cd /var/lucascranach/cranach-docker/
+cd /var/lucascranach/cranach-docker/
 ```
 
 Start the containers
 ```shell
-$ docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
 ```
 
 Stop the containers
 ```shell
-$ docker-compose stop
+docker-compose stop
 ```
 
 ## Remote server
