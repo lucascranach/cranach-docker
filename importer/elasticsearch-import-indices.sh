@@ -29,9 +29,6 @@ do
   elasticsearch_index="$(cut -d':' -f1 <<<$i)"
   echo -e "creating index and setting mappings"
   curl --user ${ELASTICSEARCH_USERNAME}:${ELASTICSEARCH_PASSWORD} -XPUT ${ELASTICSEARCH_HOST}/${elasticsearch_index}/ -d '{
-    "persistent": {
-      "http.max_content_length": "100mb"
-    },
     "settings" : { "number_of_shards" : 1, "max_result_window" : 300000, "index.requests.cache.enable": true, "index.queries.cache.enabled": true, "index.mapping.total_fields.limit": 1500 },
     "mappings": {
       "properties": {
