@@ -7,7 +7,7 @@ services:
       - NGINX_ENVSUBST_TEMPLATE_SUFFIX=.template
       - DOMAIN=${DOMAIN}
     ports:
-      - 80:80
+      - ${REVERSE_PROXY_PORT}:${REVERSE_PROXY_PORT}
     networks: ['cranach-network']
     volumes:
       - ./nginx-config/dev/templates/:/etc/nginx/templates/
