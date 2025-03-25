@@ -17,7 +17,7 @@ for i in $import_config
 do
   elasticsearch_index="$(cut -d':' -f1 <<<$i)"
   echo -e "deleting index"
-  curl --user ${ELASTICSEARCH_USERNAME}:${ELASTICSEARCH_PASSWORD} -XDELETE http://${ELASTICSEARCH_HOST}/${elasticsearch_index}/
+  curl --user ${ELASTICSEARCH_USERNAME}:${ELASTICSEARCH_PASSWORD} -XDELETE ${ELASTICSEARCH_HOST}/${elasticsearch_index}/
 done
 
 echo -e "\n"
@@ -28,7 +28,7 @@ for i in $import_config
 do
   elasticsearch_index="$(cut -d':' -f1 <<<$i)"
   echo -e "creating index and setting mappings"
-  curl --user ${ELASTICSEARCH_USERNAME}:${ELASTICSEARCH_PASSWORD} -XPUT http://${ELASTICSEARCH_HOST}/${elasticsearch_index}/ -d '{
+  curl --user ${ELASTICSEARCH_USERNAME}:${ELASTICSEARCH_PASSWORD} -XPUT ${ELASTICSEARCH_HOST}/${elasticsearch_index}/ -d '{
     "persistent": {
       "http.max_content_length": "100mb"
     },
@@ -415,7 +415,7 @@ do
   curl  --user ${ELASTICSEARCH_USERNAME}:${ELASTICSEARCH_PASSWORD} -s -H "Content-Type: application/x-ndjson" -XPOST ${ELASTICSEARCH_HOST}/${elasticsearch_index}/_bulk --data-binary "@${file}"
   echo -e "\n"
   echo -e "set max result window for index"
-  curl  --user ${ELASTICSEARCH_USERNAME}:${ELASTICSEARCH_PASSWORD} -XPUT http://${ELASTICSEARCH_HOST}/${elasticsearch_index}/_settings -d '{ "index" : { "max_result_window" : 100000 } }' -H "Content-Type: application/json"
+  curl  --user ${ELASTICSEARCH_USERNAME}:${ELASTICSEARCH_PASSWORD} -XPUT ${ELASTICSEARCH_HOST}/${elasticsearch_index}/_settings -d '{ "index" : { "max_result_window" : 100000 } }' -H "Content-Type: application/json"
   echo -e "\n"
   echo -e "--------------------"
 done
