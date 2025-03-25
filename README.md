@@ -13,22 +13,44 @@ The application runs with Docker Compose and contains two Container.
 
 Build the images and run the containers
 ```shell
-$ docker-compose build
+docker-compose build
 ```
 
 Run the containers
 ```shell
-$ docker-compose up -d
+docker-compose up -d
 ```
 
 For debugging run the containers without detached mode
 ```shell
-$ docker-compose up
+docker-compose up
 ```
 
 Stop the containers
 ```shell
-$ docker-compose stop
+docker-compose stop
+```
+
+### Start and Stop the containers on a remote server
+To start and stop the containers on a remote server, you can use the following commands:
+
+Login to the remote server
+```shell
+ssh -l <username> mivs02.gm.fh-koeln.de
+```
+Navigate to the directory where the `docker-compose.yml` file is located
+```shell
+cd /var/lucascranach/cranach-docker/
+```
+
+Start the containers
+```shell
+docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+```
+
+Stop the containers
+```shell
+docker-compose stop
 ```
 
 ## Remote server
@@ -67,7 +89,7 @@ The importer is located in the directory `importer`.
 * Start the import script: `make importesinidices`
 
 ## Renew Let's Encrypt certificates
-1. stop API container
+1. stop reverse proxy container
 ```shell
 cd /var/lucascranach/cranach-docker/ && docker-compose stop reverse-proxy
 ```
@@ -75,7 +97,7 @@ cd /var/lucascranach/cranach-docker/ && docker-compose stop reverse-proxy
 ```shell
 sudo certbot certonly --standalone --preferred-challenges http  -d mivs02.gm.fh-koeln.de
 ```
-3. start API container
+3. start reverse proxy
 ```shell
 cd /var/lucascranach/cranach-docker/ && sudo docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d reverse-proxy
 ```
