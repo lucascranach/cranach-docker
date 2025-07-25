@@ -66,6 +66,10 @@ server {
         proxy_pass http://172.17.0.1:8080;
     }
 
+    location /elasticsearch/ {
+        proxy_pass http://cranach-es:9200/;
+    }
+
     location / {
         proxy_pass http://cranach-api:8080/;
     }
