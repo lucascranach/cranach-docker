@@ -74,10 +74,12 @@ services:
       - '--web.enable-lifecycle'
     networks:
       - cranach-network
+    environment:
+      - DOMAIN=${DOMAIN}
     volumes:
       - ./prometheus:/etc/prometheus
       - prometheus-data:/prometheus
-    depends_on: ['elasticsearch']      
+    depends_on: ['elasticsearch'] 
   grafana:
     image: grafana/grafana-oss
     container_name: grafana

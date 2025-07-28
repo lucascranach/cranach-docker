@@ -17,6 +17,7 @@ receivers:
         color: '{{ if eq (index .Alerts 0).Status "firing" }}danger{{ else }}good{{ end }}'
         title: '{{ (index .Alerts 0).Labels.alertname }} – {{ (index .Alerts 0).Status | toUpper }}'
         text: |
+          *Server:* {{ .CommonLabels.server }}
           *Instance:* {{ (index .Alerts 0).Labels.instance }}
           *Summary:* {{ (index .Alerts 0).Annotations.summary }}
           *Description:* {{ (index .Alerts 0).Annotations.description }}
