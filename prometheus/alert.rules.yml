@@ -57,14 +57,6 @@ groups:
           summary: "High request latency on {{ $labels.instance }}"
           description: "95th percentile request latency is over 1s."
 
-      - alert: ApiTargetDown
-        expr: up{job="api"} == 0
-        for: 1m
-        labels:
-          severity: critical
-        annotations:
-          summary: "Node.js API is down"
-          description: "Prometheus cannot scrape the Node.js API."
   - name: elasticsearch_alerts
     rules:
       - alert: ElasticsearchExporterDown
