@@ -118,8 +118,10 @@ services:
     container_name: elasticsearch-exporter
     networks:
       - cranach-network
+    environment:
+      - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}      
     command:
-      '--es.uri=http://elastic:password@cranach-es:9200'
+      - '--es.uri=http://elastic:${ELASTIC_PASSWORD}@cranach-es:9200'
     depends_on: ['elasticsearch']
     restart: always
   node-exporter:
