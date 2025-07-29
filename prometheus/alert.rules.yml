@@ -94,3 +94,13 @@ groups:
         annotations:
           summary: "Too many open files in Elasticsearch"
           description: "Elasticsearch is close to reaching the open files limit."
+  - name: website_alerts
+    rules:
+      - alert: WebsiteDown
+        expr: probe_success{instance="https://lucascranach.org/"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Website is down"
+          description: "The website https://lucascranach.org/ is unreachable."
