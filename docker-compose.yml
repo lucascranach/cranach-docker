@@ -37,7 +37,11 @@ services:
     links: ['elasticsearch']
     volumes:
        - ./kibana.yml:/usr/share/kibana/config/kibana.yml      
-    depends_on: ['elasticsearch']
+    depends_on:
+      - elasticsearch
+      - elasticsearch-exporter
+      - node-exporter
+      - api
   api:
     build: ${PATH_API}
     command: nodemon app.js
