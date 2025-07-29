@@ -39,9 +39,6 @@ services:
        - ./kibana.yml:/usr/share/kibana/config/kibana.yml      
     depends_on:
       - elasticsearch
-      - elasticsearch-exporter
-      - node-exporter
-      - api
   api:
     build: ${PATH_API}
     command: nodemon app.js
@@ -83,7 +80,12 @@ services:
     volumes:
       - ./prometheus:/etc/prometheus
       - prometheus-data:/prometheus
-    depends_on: ['elasticsearch'] 
+    depends_on:
+      - elasticsearch
+      - elasticsearch-exporter
+      - node-exporter
+      - api
+      - blackbox-exporter
   grafana:
     image: grafana/grafana-oss
     container_name: grafana
@@ -139,7 +141,14 @@ services:
       - '--path.procfs=/host/proc'
       - '--path.sysfs=/host/sys'
       - '--path.rootfs=/rootfs'
-      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'      
+      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+  blackbox-exporter:
+    image: prom/blackbox-exporter:latest
+    volumes:
+      - ./blackbox/config.yml:/etc/blackbox_exporter/config.yml
+    networks:
+      - cranach-network
+
   # mongodb:
   #   container_name: cranach-mongo-db
   #   image: mongo
