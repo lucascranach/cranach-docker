@@ -70,7 +70,7 @@ groups:
 
       - alert: ElasticsearchClusterDown
         expr: elasticsearch_clusterinfo_up == 0
-        for: 5m
+        for: 2m
         labels:
           severity: critical
         annotations:
