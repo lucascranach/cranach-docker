@@ -1,5 +1,5 @@
 global:
-  scrape_interval: 15s
+  scrape_interval: 30s
   evaluation_interval: 15s
   external_labels:
     server: ${DOMAIN}
@@ -11,31 +11,42 @@ alerting:
             - 'alertmanager:9093'
 
 rule_files:
-  - 'alert.rules.yml' 
+  - 'alert.rules.yml'
 
 scrape_configs:
 
+  # --- API monitoring ---
   - job_name: 'api'
+    scrape_interval: 15s
     static_configs:
       - targets: ['cranach-api:8080']
     metrics_path: /metrics
 
+  # --- Prometheus self-monitoring ---
   - job_name: 'prometheus'
+    scrape_interval: 30s
     static_configs:
       - targets: ['prometheus:9090']
     metrics_path: /metrics
 
+  # --- Node Exporter (Server metrics) ---
   - job_name: 'node-exporter'
+    scrape_interval: 30s
     static_configs:
       - targets: ['node-exporter:9100']
 
+  # --- Elasticsearch monitoring ---
   - job_name: 'elasticsearch'
+    scrape_interval: 30s
     static_configs:
       - targets: ['elasticsearch-exporter:9114']
+
+  # --- Blackbox monitoring (Website) ---
   - job_name: 'blackbox'
+    scrape_interval: 60s
     metrics_path: /probe
     params:
-      module: [https_2xx]    # Modulname aus blackbox.yml
+      module: [https_2xx]
     static_configs:
       - targets:
           - https://lucascranach.org/
