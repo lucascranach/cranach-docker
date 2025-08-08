@@ -12,6 +12,7 @@ echo -e "\n"
 echo -e "set max_buckes to 20000"
 
 
+
 for i in $import_config
 do
   elasticsearch_index="$(cut -d':' -f1 <<<$i)"

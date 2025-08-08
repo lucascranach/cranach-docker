@@ -22,17 +22,40 @@ server {
     # verify chain of trust of OCSP response using Root CA and Intermediate certs
     ssl_trusted_certificate /etc/letsencrypt/live/${DOMAIN}/chain.pem;
 
-    location / {
-        proxy_pass http://cranach-api:8080/;
-    }
-
     location /kibana {
         proxy_pass http://cranach-kibana:5601;
     }
 
+    location /prometheus/ {
+        auth_basic "Protected Prometheus";
+        auth_basic_user_file /etc/nginx/.htpasswd;
+        proxy_pass http://prometheus:9090/;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+
+    location /grafana {
+        proxy_pass http://grafana:3000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;        
+    }
+
+    location /alertmanager/ {
+        auth_basic "Protected Alertmanager";
+        auth_basic_user_file /etc/nginx/.htpasswd;
+        proxy_pass http://alertmanager:9093/;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+
+
     location /elasticsearch/ {
         proxy_pass http://cranach-es:9200/;
-        rewrite ^/elasticsearch/(.*) /$1 break; # removes /elasticsearch from the path
+        rewrite ^/elasticsearch/(.*) /$1 last;
     }
 
     location /cranach-ar/ {
@@ -41,6 +64,14 @@ server {
 
     location /cranach-ar-backend/ {
         proxy_pass http://172.17.0.1:8080;
+    }
+
+    location /elasticsearch/ {
+        proxy_pass http://cranach-es:9200/;
+    }
+
+    location / {
+        proxy_pass http://cranach-api:8080/;
     }
 
     #error_page  404              /404.html;

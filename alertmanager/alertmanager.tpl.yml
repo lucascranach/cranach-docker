@@ -1,0 +1,24 @@
+global:
+  resolve_timeout: 5m
+
+route:
+  receiver: slack-alerts
+  group_by: ['...']
+  group_wait: 10s
+  group_interval: 30s
+  repeat_interval: 1h
+
+receivers:
+  - name: slack-alerts
+    slack_configs:
+      - send_resolved: true
+        api_url: ${SLACK_WEBHOOK_URL}
+        channel: '#cranach-prometheus-alerts'
+        color: '{{ if eq (index .Alerts 0).Status "firing" }}danger{{ else }}good{{ end }}'
+        title: '{{ (index .Alerts 0).Labels.alertname }} – {{ (index .Alerts 0).Status | toUpper }}'
+        text: |
+          *Server:* {{ .CommonLabels.server }}
+          *Instance:* {{ (index .Alerts 0).Labels.instance }}
+          *Summary:* {{ (index .Alerts 0).Annotations.summary }}
+          *Description:* {{ (index .Alerts 0).Annotations.description }}
+          *Severity:* {{ (index .Alerts 0).Labels.severity }}
