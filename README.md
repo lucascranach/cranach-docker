@@ -45,12 +45,12 @@ cd /var/lucascranach/cranach-docker/
 
 Start the containers
 ```shell
-docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d
 ```
 
 Stop the containers
 ```shell
-docker-compose stop
+docker compose stop
 ```
 
 ## Remote server
@@ -91,7 +91,7 @@ The importer is located in the directory `importer`.
 ## Renew Let's Encrypt certificates
 1. stop reverse proxy container
 ```shell
-cd /var/lucascranach/cranach-docker/ && docker-compose stop reverse-proxy
+cd /var/lucascranach/cranach-docker/ && docker compose stop reverse-proxy
 ```
 2. Renew certificate
 ```shell
@@ -99,7 +99,7 @@ sudo certbot certonly --standalone --preferred-challenges http  -d mivs02.gm.fh-
 ```
 3. start reverse proxy
 ```shell
-cd /var/lucascranach/cranach-docker/ && sudo docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d reverse-proxy
+cd /var/lucascranach/cranach-docker/ && sudo docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d reverse-proxy
 ```
 
 
