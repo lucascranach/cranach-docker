@@ -13,22 +13,22 @@ The application runs with Docker Compose and contains two Container.
 
 Build the images and run the containers
 ```shell
-docker-compose build
+docker compose build
 ```
 
 Run the containers
 ```shell
-docker-compose up -d
+docker compose up -d
 ```
 
 For debugging run the containers without detached mode
 ```shell
-docker-compose up
+docker compose up
 ```
 
 Stop the containers
 ```shell
-docker-compose stop
+docker compose stop
 ```
 
 ### Start and Stop the containers on a remote server
