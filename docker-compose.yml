@@ -29,8 +29,7 @@ services:
     container_name: cranach-kibana
     image: docker.elastic.co/kibana/kibana:$ELASTIC_VERSION
     environment:
-      - ELASTICSEARCH_USERNAME=elastic
-      - ELASTICSEARCH_PASSWORD=$ELASTIC_PASSWORD
+      - ELASTICSEARCH_SERVICEACCOUNTTOKEN=$KIBANA_SERVICE_TOKEN
       - ELASTIC_URL=http://cranach-es:9200
     networks:
       - cranach-network
