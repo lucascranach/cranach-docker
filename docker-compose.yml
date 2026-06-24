@@ -1,7 +1,7 @@
 services:
   reverse-proxy:
     container_name: reverse-proxy
-    image: nginx
+    image: nginx:1.30.3-alpine
     environment:
       - NGINX_ENVSUBST_TEMPLATE_SUFFIX=.template
       - DOMAIN=${DOMAIN}
@@ -66,7 +66,7 @@ services:
     networks:
       - cranach-network
   prometheus:
-    image: prom/prometheus:latest
+    image: prom/prometheus:v3.12.0
     container_name: prometheus
     restart: unless-stopped
     command:
@@ -90,7 +90,7 @@ services:
       - api
       - blackbox-exporter
   grafana:
-    image: grafana/grafana-oss
+    image: grafana/grafana-oss:12.1.0
     container_name: grafana
     environment:
       - GF_SECURITY_ADMIN_USER=${GF_SECURITY_ADMIN_USER}
@@ -119,7 +119,7 @@ services:
     networks:
       - cranach-network
   elasticsearch-exporter:
-    image: quay.io/prometheuscommunity/elasticsearch-exporter:latest
+    image: quay.io/prometheuscommunity/elasticsearch-exporter:v1.10.0
     container_name: elasticsearch-exporter
     networks:
       - cranach-network
@@ -130,7 +130,7 @@ services:
     depends_on: ['elasticsearch']
     restart: always
   node-exporter:
-    image: prom/node-exporter:latest
+    image: prom/node-exporter:v1.11.1
     container_name: node-exporter
     restart: unless-stopped
     networks:
@@ -146,7 +146,7 @@ services:
       - '--path.rootfs=/rootfs'
       - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
   blackbox-exporter:
-    image: prom/blackbox-exporter:latest
+    image: prom/blackbox-exporter:v0.28.0
     volumes:
       - ./blackbox/config.yml:/etc/blackbox_exporter/config.yml
     networks:
