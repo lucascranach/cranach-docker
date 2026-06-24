@@ -53,6 +53,9 @@ services:
       - MONGO_DB_PASSWORD=${MONGO_DB_PASSWORD}
       - SESSION_EXPIRY=${SESSION_EXPIRY}
       - JWT_SECRET=${JWT_SECRET}
+      - LIDO_BASE_URL=${LIDO_BASE_URL}
+      - METADATA_EXIF_API_URL=${METADATA_EXIF_API_URL}
+      - METADATA_EXIF_API_KEY=${METADATA_EXIF_API_KEY}
     image: cranach-api
     volumes:
       - ${PATH_API}/src:/usr/src/app
