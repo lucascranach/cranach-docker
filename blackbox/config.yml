@@ -1,9 +1,30 @@
 modules:
   https_2xx:
     prober: http
+    # Effektives Probe-Timeout = min(dieser Wert, scrape_timeout - --timeout-offset).
+    # Gemessene TTFB der (ungecachten, PHP-gerenderten) Startseite ist ~0.45s,
+    # 5s sind also ~10x Reserve. NICHT erhoehen, um Origin-Haenger zu kaschieren:
+    # eine Startseite >5s ist ein echter, nutzersichtbarer Defekt.
     timeout: 5s
     http:
-      valid_http_versions: ["HTTP/1.1", "HTTP/2"]
+      # Go meldet HTTP/2 als "HTTP/2.0". Der bisherige Wert "HTTP/2" konnte
+      # resp.Proto nie matchen - sobald h2 am Origin aktiviert wird, waere jeder
+      # Probe mit "Invalid HTTP version number" dauerhaft fehlgeschlagen.
+      valid_http_versions: ["HTTP/1.1", "HTTP/2.0"]
       method: GET
+      follow_redirects: true
+      # lucascranach.org hat ausschliesslich einen A-Record. blackbox bevorzugt
+      # per Default ip6 mit Fallback, wodurch Gos Resolver A *und* AAAA parallel
+      # ueber Dockers eingebetteten Resolver (127.0.0.11) stellt und auf beide
+      # wartet. Das Bridge-Netz cranach-network ist ohnehin IPv4-only.
+      preferred_ip_protocol: "ip4"
+      ip_protocol_fallback: false
       fail_if_ssl: false
       fail_if_not_ssl: true
+      # Prober im Access-Log des Origin identifizierbar machen, damit
+      # Fehlschlaege mit serverseitigen Logs korreliert werden koennen.
+      headers:
+        User-Agent: "blackbox-exporter/0.28.0 (cranach-monitoring; mivs02/mivs03)"
+        Accept: "text/html"
+      tls_config:
+        insecure_skip_verify: false
