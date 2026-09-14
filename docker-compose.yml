@@ -147,8 +147,10 @@ services:
       - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
   blackbox-exporter:
     image: prom/blackbox-exporter:v0.28.0
+    container_name: blackbox-exporter
+    restart: unless-stopped
     volumes:
-      - ./blackbox/config.yml:/etc/blackbox_exporter/config.yml
+      - ./blackbox/config.yml:/etc/blackbox_exporter/config.yml:ro
     networks:
       - cranach-network
 
