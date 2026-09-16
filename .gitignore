@@ -4,3 +4,4 @@ esdata
 importer/files*
 importer/config.cfg
 kibana.yml
+CLAUDE.local.md

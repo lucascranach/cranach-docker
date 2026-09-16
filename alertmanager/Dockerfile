@@ -8,7 +8,7 @@ RUN apk add --no-cache \
     tar
 
 # Set Alertmanager version
-ENV ALERTMANAGER_VERSION=0.28.1
+ENV ALERTMANAGER_VERSION=0.33.0
 
 # Download and extract Alertmanager
 RUN curl -L https://github.com/prometheus/alertmanager/releases/download/v${ALERTMANAGER_VERSION}/alertmanager-${ALERTMANAGER_VERSION}.linux-amd64.tar.gz | \

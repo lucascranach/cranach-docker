@@ -42,8 +42,16 @@ scrape_configs:
       - targets: ['elasticsearch-exporter:9114']
 
   # --- Blackbox monitoring (Website) ---
+  # scrape_interval 30s: 60s lieferte einen Sample pro Minute und machte
+  # `for:`-Dauern unterhalb von ~5m unbrauchbar - ein einzelner schlechter
+  # Sample blieb ueber 4 Evaluationen der frischeste und zwei
+  # aufeinanderfolgende erreichten `for: 1m` punktgenau.
+  # scrape_timeout 10s: muss <= scrape_interval sein. Das effektive Probe-
+  # Timeout ist min(module.timeout, scrape_timeout - 0.5s) = min(5s, 9.5s) = 5s,
+  # das blackbox-Modul-Timeout bleibt also massgeblich.
   - job_name: 'blackbox'
-    scrape_interval: 60s
+    scrape_interval: 30s
+    scrape_timeout: 10s
     metrics_path: /probe
     params:
       module: [https_2xx]
@@ -57,3 +65,12 @@ scrape_configs:
         target_label: instance
       - target_label: __address__
         replacement: blackbox-exporter:9115
+
+  # --- Blackbox-Exporter Self-Monitoring ---
+  # Das eigene /metrics des Exporters wurde nie gescraped, ein fehlgeschlagener
+  # Config-Reload oder ein crashender Exporter war damit unsichtbar.
+  - job_name: 'blackbox-exporter'
+    scrape_interval: 30s
+    static_configs:
+      - targets: ['blackbox-exporter:9115']
+    metrics_path: /metrics

@@ -5,3 +5,5 @@ server.publicBaseUrl: "https://mivs03.gm.fh-koeln.de/kibana"
 server.rewriteBasePath: true
 server.shutdownTimeout: "5s"
 elasticsearch.hosts: ["http://cranach-es:9200"]
+# Service Account Token für Authentifizierung (wird via Umgebungsvariable gesetzt)
+# elasticsearch.serviceAccountToken wird automatisch aus ELASTICSEARCH_SERVICEACCOUNTTOKEN gelesen

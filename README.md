@@ -53,6 +53,99 @@ Stop the containers
 docker-compose stop
 ```
 
+## Kibana Service Account Setup
+
+### Background
+Starting with Elasticsearch 8.0, Kibana can no longer use the `elastic` superuser account for authentication. This is because the superuser account does not have write access to system indices that Kibana requires. Instead, a service account token must be used.
+
+### Setup Steps
+
+#### 1. Start Elasticsearch Container (without Kibana)
+First, start only the Elasticsearch container:
+
+```bash
+docker compose up -d elasticsearch
+```
+
+Wait approximately 30 seconds for Elasticsearch to fully start.
+
+#### 2. Create Service Token for Kibana
+
+Run the following command to generate a service token for Kibana:
+
+```bash
+docker exec -it cranach-es bin/elasticsearch-service-tokens create elastic/kibana kibana-token
+```
+
+**Important:** Note down the generated token! It will only be displayed once and has the following format:
+```
+SERVICE_TOKEN elastic/kibana/kibana-token = AAEAAWVsYXN0aWM...
+```
+
+#### 3. Add Token to .env File
+
+Open the `.env` file and replace `REPLACE_WITH_GENERATED_TOKEN` with the generated token:
+
+```bash
+KIBANA_SERVICE_TOKEN=AAEAAWVsYXN0aWM...
+```
+
+The complete token string (starting with `AAE...`) must be entered.
+
+#### 4. Start All Containers
+
+Now you can start all containers:
+
+```bash
+docker compose up -d
+```
+
+Kibana should now successfully authenticate using the service account token.
+
+#### 5. Verification
+
+Check the Kibana logs:
+
+```bash
+docker logs cranach-kibana
+```
+
+You should no longer see any authentication errors.
+
+### Additional Token Management
+
+#### List All Service Tokens
+
+To view all existing service tokens:
+
+```bash
+docker exec -it cranach-es bin/elasticsearch-service-tokens list
+```
+
+#### Delete Existing Token (optional)
+
+If you need to delete a token:
+
+```bash
+docker exec -it cranach-es bin/elasticsearch-service-tokens delete elastic/kibana kibana-token
+```
+
+#### Create New Token
+
+To create a new token:
+
+```bash
+docker exec -it cranach-es bin/elasticsearch-service-tokens create elastic/kibana kibana-token
+```
+
+### Further Information
+
+- [Elasticsearch Service Accounts Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/8.0/service-accounts.html)
+- The `elastic/kibana` service account is predefined and specifically designated for Kibana
+- Service tokens do not expire and must be manually deleted when no longer needed
+- Multiple tokens can be created per service account (useful for multiple Kibana instances)
+
+
 ## Remote server
 There are two remote servers for the Cranach API which can be accessed via the following URLs:
 * `https://mivs.02.gm.fh-koeln.de` - Productive environment

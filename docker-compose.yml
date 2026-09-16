@@ -1,7 +1,7 @@
 services:
   reverse-proxy:
     container_name: reverse-proxy
-    image: nginx
+    image: nginx:1.30.3-alpine
     environment:
       - NGINX_ENVSUBST_TEMPLATE_SUFFIX=.template
       - DOMAIN=${DOMAIN}
@@ -29,8 +29,7 @@ services:
     container_name: cranach-kibana
     image: docker.elastic.co/kibana/kibana:$ELASTIC_VERSION
     environment:
-      - ELASTICSEARCH_USERNAME=elastic
-      - ELASTICSEARCH_PASSWORD=$ELASTIC_PASSWORD
+      - ELASTICSEARCH_SERVICEACCOUNTTOKEN=$KIBANA_SERVICE_TOKEN
       - ELASTIC_URL=http://cranach-es:9200
     networks:
       - cranach-network
@@ -54,6 +53,9 @@ services:
       - MONGO_DB_PASSWORD=${MONGO_DB_PASSWORD}
       - SESSION_EXPIRY=${SESSION_EXPIRY}
       - JWT_SECRET=${JWT_SECRET}
+      - LIDO_BASE_URL=${LIDO_BASE_URL}
+      - METADATA_EXIF_API_URL=${METADATA_EXIF_API_URL}
+      - METADATA_EXIF_API_KEY=${METADATA_EXIF_API_KEY}
     image: cranach-api
     volumes:
       - ${PATH_API}/src:/usr/src/app
@@ -64,7 +66,7 @@ services:
     networks:
       - cranach-network
   prometheus:
-    image: prom/prometheus:latest
+    image: prom/prometheus:v3.12.0
     container_name: prometheus
     restart: unless-stopped
     command:
@@ -88,7 +90,7 @@ services:
       - api
       - blackbox-exporter
   grafana:
-    image: grafana/grafana-oss
+    image: grafana/grafana-oss:12.1.0
     container_name: grafana
     environment:
       - GF_SECURITY_ADMIN_USER=${GF_SECURITY_ADMIN_USER}
@@ -117,7 +119,7 @@ services:
     networks:
       - cranach-network
   elasticsearch-exporter:
-    image: quay.io/prometheuscommunity/elasticsearch-exporter:latest
+    image: quay.io/prometheuscommunity/elasticsearch-exporter:v1.10.0
     container_name: elasticsearch-exporter
     networks:
       - cranach-network
@@ -128,7 +130,7 @@ services:
     depends_on: ['elasticsearch']
     restart: always
   node-exporter:
-    image: prom/node-exporter:latest
+    image: prom/node-exporter:v1.11.1
     container_name: node-exporter
     restart: unless-stopped
     networks:
@@ -144,9 +146,11 @@ services:
       - '--path.rootfs=/rootfs'
       - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
   blackbox-exporter:
-    image: prom/blackbox-exporter:latest
+    image: prom/blackbox-exporter:v0.28.0
+    container_name: blackbox-exporter
+    restart: unless-stopped
     volumes:
-      - ./blackbox/config.yml:/etc/blackbox_exporter/config.yml
+      - ./blackbox/config.yml:/etc/blackbox_exporter/config.yml:ro
     networks:
       - cranach-network
 

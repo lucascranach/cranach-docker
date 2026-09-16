@@ -96,11 +96,98 @@ groups:
           description: "Elasticsearch is close to reaching the open files limit."
   - name: website_alerts
     rules:
+
+      # --- 1. Harter Ausfall. Paged. -------------------------------------
+      # `for: 5m` bei 30s-Scrape-Intervall = 11 aufeinanderfolgende Fehlschlaege.
+      # Das bisherige `for: 1m` bei 60s-Intervall war bereits durch ZWEI
+      # aufeinanderfolgende Fehlschlaege erfuellt, ein ~61s-Aussetzer paged also
+      # als critical. Die Aufloesung bleibt sofort: der erste erfolgreiche
+      # Probe beendet den Alarm.
       - alert: WebsiteDown
-        expr: probe_success{instance="https://lucascranach.org/"} == 0
-        for: 1m
+        expr: probe_success{job="blackbox", instance="https://lucascranach.org/"} == 0
+        for: 5m
         labels:
           severity: critical
         annotations:
-          summary: "Website is down"
-          description: "The website https://lucascranach.org/ is unreachable."
+          summary: 'Website {{ $labels.instance }} is down'
+          description: 'All blackbox probes have failed for 5 minutes straight. Check probe_http_status_code, probe_duration_seconds and probe_http_duration_seconds by phase.'
+
+      # --- 2. Blinder Fleck im Monitoring. Paged. ------------------------
+      # Ein fehlgeschlagener Scrape schreibt Stale-Marker, wodurch
+      # `probe_success == 0` leer zurueckkommt und WebsiteDown still aufloest.
+      # Ohne diesen Waechter sieht ein toter blackbox-exporter exakt aus wie
+      # eine gesunde Website.
+      - alert: WebsiteProbeMissing
+        expr: absent(probe_success{job="blackbox", instance="https://lucascranach.org/"})
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: 'No probe results for {{ $labels.instance }}'
+          description: 'Prometheus has received no probe_success sample for 5 minutes. The website is currently not being monitored.'
+
+      # --- 3. Kurze Aussetzer bleiben SICHTBAR, als warning. -------------
+      # probe_success ist 0/1, daher ist count_over_time - sum_over_time exakt
+      # die "Anzahl fehlgeschlagener Probes im Fenster". Anders als
+      # avg_over_time ist das bei nur teilweise gefuelltem Fenster (nach einem
+      # Prometheus-Neustart) schwellenstabil und braucht keinen count-Guard.
+      # >2 = mindestens 3 Fehlschlaege in 30m ~= 90s Stoerung bei 30s-Takt.
+      # Bei zu viel Rauschen auf >5 anheben.
+      - alert: WebsiteProbeUnstable
+        expr: >-
+          count_over_time(probe_success{job="blackbox", instance="https://lucascranach.org/"}[30m])
+          - sum_over_time(probe_success{job="blackbox", instance="https://lucascranach.org/"}[30m])
+          > 2
+        labels:
+          severity: warning
+        annotations:
+          summary: 'Website probe unstable: {{ $value }} failed probes in 30m'
+          description: 'Transient probe failures for {{ $labels.instance }} without a sustained outage. Check probe_http_duration_seconds by phase.'
+
+      # --- 4-7. Phasen-Sichtbarkeit: den NAECHSTEN Fehlschlag
+      #          selbsterklaerend machen. ---------------------------------
+      - alert: WebsiteProbeSlow
+        expr: probe_duration_seconds{job="blackbox"} > 2
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: 'Probe to {{ $labels.instance }} is slow'
+          description: 'The probe has needed more than 2s for 10 minutes. The module timeout is 5s - if this keeps rising, probes will start failing.'
+
+      - alert: WebsiteProbeDnsSlow
+        expr: probe_dns_lookup_time_seconds{job="blackbox"} > 1
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: 'DNS lookup for {{ $labels.instance }} is slow'
+          description: 'Resolution via the Docker embedded resolver (127.0.0.11) took more than 1s for 10 minutes.'
+
+      - alert: WebsiteHttpStatusUnexpected
+        expr: probe_http_status_code{job="blackbox"} != 200 and probe_http_status_code{job="blackbox"} != 0
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: '{{ $labels.instance }} answers with HTTP {{ $value }}'
+          description: 'The origin is reachable but does not return 200. A 502/504 points at PHP-FPM on the origin, not at the network.'
+
+      - alert: WebsiteCertificateExpiringSoon
+        expr: (probe_ssl_earliest_cert_expiry{job="blackbox"} - time()) / 86400 < 21
+        for: 1h
+        labels:
+          severity: warning
+        annotations:
+          summary: 'TLS certificate for {{ $labels.instance }} expires soon'
+          description: 'The certificate expires in less than 21 days.'
+
+      # --- 8. Der Exporter selbst. ---------------------------------------
+      - alert: BlackboxExporterConfigReloadFailed
+        expr: blackbox_exporter_config_last_reload_successful == 0
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: 'blackbox-exporter failed to load its configuration'
+          description: 'The running exporter is using a stale or no config. Check `docker compose logs blackbox-exporter`.'
